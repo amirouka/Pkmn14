@@ -1,0 +1,12 @@
+BASIC
+Pikachu
+50
+LIGHTNING
+-
+2 / Spark / 20
+Fighting
+-
+1
+Legendary Collection
+-
+-/-/-/-

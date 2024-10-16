@@ -1,0 +1,12 @@
+STAGE1
+Raichu
+120
+LIGHTNING
+src/main/resources/evolves_from.txt
+1 / Ambushing Spark / 40,2C / Electric Ball / 120
+FIGHTING
+-
+1
+Sword & Shield-Silver Tempest
+F
+Amira / Mingaraeva / Ilnurovna / BSBO-06-23
