@@ -1,11 +1,13 @@
-package ru.mirea.pkmn;
+package mingaraevaai;
+import ru.mirea.pkmn.Card;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import static ru.mirea.pkmn.CardImport.evolvesFrom;
+import static mingaraevaai.CardImport.evolvesFrom;
 
 public class PkmnApplication {
 
@@ -19,7 +21,6 @@ public class PkmnApplication {
         if(a == 1) {
             try {
                 card = cardImport.createCardFromFile("src/main/resources/my_card.txt");
-
                 System.out.println(card);
                 System.out.println("Карта первой стадии");
                 if(evolvesFrom != null)
@@ -36,9 +37,7 @@ public class PkmnApplication {
             }
         } else if(a == 2) {
             try {
-                System.out.println("Введите имя файла с картой (например, Raichu.crd): ");
-                String fileName = scanner.next();
-                String filePath = "src/main/resources/" + fileName;
+                String filePath = "src/main/resources/Corvisquire.crd";
                 byte[] bytes = Files.readAllBytes(Paths.get(filePath));
                 card = cardImport.deserializeCardFromBytes(bytes);
                 System.out.println(card);

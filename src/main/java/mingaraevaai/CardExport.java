@@ -1,4 +1,6 @@
-package ru.mirea.pkmn;
+package mingaraevaai;
+import ru.mirea.pkmn.Card;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

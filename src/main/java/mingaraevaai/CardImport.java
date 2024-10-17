@@ -1,4 +1,6 @@
-package ru.mirea.pkmn;
+package mingaraevaai;
+import ru.mirea.pkmn.*;
+
 import java.io.*;
 
 public class CardImport {
