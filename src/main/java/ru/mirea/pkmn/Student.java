@@ -1,6 +1,9 @@
 package ru.mirea.pkmn;
+import lombok.Getter;
+
 import java.io.Serializable;
 
+@Getter
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
     private String firstName;
@@ -15,19 +18,8 @@ public class Student implements Serializable {
         this.group = group;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getSurName() {
-        return surName;
-    }
-
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public String getGroup() {
-        return group;
+    @Override
+    public String toString() {
+        return "firstName = " + firstName + " surName = " + surName + " familyName = " + familyName +  " group = " + group;
     }
 }

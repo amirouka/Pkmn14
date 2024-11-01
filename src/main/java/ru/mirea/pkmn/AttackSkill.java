@@ -1,6 +1,9 @@
 package ru.mirea.pkmn;
+import lombok.Getter;
+
 import java.io.Serializable;
 
+@Getter
 public class AttackSkill implements Serializable {
     public static final long serialVersionUID = 1L;
     private String name;
@@ -14,35 +17,26 @@ public class AttackSkill implements Serializable {
         this.damage = damage;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCost() {
-        return cost;
+        this.description= description;
     }
 
     public void setCost(String cost) {
         this.cost = cost;
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+    @Override
+    public String toString(){
+        return "\n  name = " + name + "\n" +
+                "  text = " + description + "\n" +
+                "  cost = " + cost + "\n" +
+                "  damage = " + damage;
     }
 }

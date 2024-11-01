@@ -6,5 +6,10 @@ public enum PokemonStage {
     STAGE2,
     VSTAR,
     VMAX;
+
+    @Override
+    public String toString() {
+        return name();
+    }
 }
 

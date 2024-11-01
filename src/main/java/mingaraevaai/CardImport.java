@@ -2,6 +2,8 @@ package mingaraevaai;
 import ru.mirea.pkmn.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardImport {
     public static final long serialVersionUID = 1L;
@@ -24,19 +26,18 @@ public class CardImport {
             card.setEvolvesFrom(evolvesFrom);
         }
 
-        String[] attacks = reader.readLine().split(",");
-        for (String attack : attacks) {
-            String[] attackParts = attack.trim().split("/");
-            if (attackParts.length >= 3) {
-                AttackSkill attackSkill = new AttackSkill(
-                        attackParts[1].trim(),
-                        attackParts[0].trim(),
-                        Integer.parseInt(attackParts[2].trim())
-                );
-                card.addAttackSkill(attackSkill);
-            } else {
-                System.err.println("Неверный формат данных атаки: " + attack);
-            }
+        String attack = reader.readLine();
+        List<AttackSkill> attackSkillList = new ArrayList<>();
+        String[] tokens = attack.split(",");
+        if (tokens.length == 1){
+            String[] args = tokens[0].split("/");
+            attackSkillList.add(new AttackSkill(args[0], args[1], Integer.valueOf(args[2].trim())));
+        }
+        else if (tokens.length == 2){
+            String[] args = tokens[0].split("/");
+            attackSkillList.add(new AttackSkill(args[0], args[1], Integer.valueOf(args[2].trim())));
+            args = tokens[1].split("/");
+            attackSkillList.add(new AttackSkill(args[0], args[1], Integer.valueOf(args[2].trim())));
         }
 
         String weakness = reader.readLine();
@@ -57,6 +58,7 @@ public class CardImport {
         String[] ownerInfo = reader.readLine().split("/");
         card.setPokemonOwner(new Student(ownerInfo[0], ownerInfo[1], ownerInfo[2], ownerInfo[3]));
 
+        card.setNumber(reader.readLine());
         reader.close();
         bis.close();
 

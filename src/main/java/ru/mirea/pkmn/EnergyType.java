@@ -11,5 +11,11 @@ public enum EnergyType {
     METAL,
     FAIRY,
     DRAGON,
-    COLORLESS
+    COLORLESS;
+
+    @Override
+    public String toString() {
+        return name();
+    }
+
 }

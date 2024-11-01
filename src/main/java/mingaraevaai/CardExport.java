@@ -7,9 +7,8 @@ import java.io.ObjectOutputStream;
 
 public class CardExport {
     public static final long serialVersionUID = 1L;
-
-    public void serializeCardToFile(Card card, String fileName) throws IOException {
-        FileOutputStream fos = new FileOutputStream(fileName + ".crd");
+    public void serializeCardToFile(Card card) throws IOException {
+        FileOutputStream fos = new FileOutputStream(card.getName() + ".crd");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(card);
         oos.close();

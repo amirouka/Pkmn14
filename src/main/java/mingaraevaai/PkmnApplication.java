@@ -1,56 +1,55 @@
 package mingaraevaai;
-import ru.mirea.pkmn.Card;
 
-import java.io.FileNotFoundException;
+import com.fasterxml.jackson.databind.JsonNode;
+import ru.mirea.pkmn.AttackSkill;
+import ru.mirea.pkmn.Card;
+import ru.mirea.pkmn.web.http.PkmnHttpClient;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
-
-import static mingaraevaai.CardImport.evolvesFrom;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PkmnApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
+
         CardImport cardImport = new CardImport();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Привет юный ловец покемонов!\nЕсли хочешь записать свою карту введи 1, если хочешь прочитать чью - то карту введи 2");
-        int a = scanner.nextInt();
+        Card card = cardImport.createCardFromFile("C:\\Users\\Амира\\Desktop\\Pkmn\\src\\main\\resources\\my_card.txt");
 
-        Card card;
-        if(a == 1) {
-            try {
-                card = cardImport.createCardFromFile("src/main/resources/my_card.txt");
-                System.out.println(card);
-                System.out.println("Карта первой стадии");
-                if(evolvesFrom != null)
-                    System.out.println(evolvesFrom);
+        PkmnHttpClient pkmnHttpClient = new PkmnHttpClient();
 
-                CardExport cardExport = new CardExport();
-                cardExport.serializeCardToFile(card, card.getName());
-                System.out.println("Карта сериализована в файл: " + card.getName() + ".crd");
+        JsonNode cardData = pkmnHttpClient.getPokemonCard(card.getName(), card.getNumber(), card.getHp());
+        System.out.println(cardData.toPrettyString());
 
-            } catch (FileNotFoundException e) {
-                System.err.println("Файл my_card.txt не найден: " + e.getMessage());
-            } catch (IOException e) {
-                System.err.println("Ошибка при сериализации: " + e.getMessage());
-            }
-        } else if(a == 2) {
-            try {
-                String filePath = "src/main/resources/Corvisquire.crd";
-                byte[] bytes = Files.readAllBytes(Paths.get(filePath));
-                card = cardImport.deserializeCardFromBytes(bytes);
-                System.out.println(card);
+        List<AttackSkill> skills = new ArrayList<>();
 
-            } catch (FileNotFoundException e) {
-                System.err.println("Файл *.crd не найден: " + e.getMessage());
-            } catch (IOException e) {
-                System.err.println("Ошибка при сериализации: " + e.getMessage());
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            System.out.println("Не ну ты смотри что вводишь");
-        }
+        JsonNode dataNode = cardData.path("data");
+        if (dataNode.isArray()) {
+            JsonNode cardInfo = dataNode.get(0);
+
+            JsonNode attacks = cardInfo.path("attacks");
+            if (attacks.isArray()) {
+                for (JsonNode attack : attacks) {
+                    String name = attack.path("name").asText();
+                    String damage = attack.path("damage").asText("");
+                    String cost = attack.path("cost").toString();
+                    String text = attack.path("text").asText("");
+                    String cleanDamage = damage.replaceAll("[^\\d]", "");
+                    int damageValue = cleanDamage.isEmpty() ? 0 : Integer.parseInt(cleanDamage);
+
+                    AttackSkill skill = new AttackSkill(cost, name, damageValue);
+                    skill.setDescription(text);
+                    skills.add(skill);
+                }}}
+        card.setSkills(skills);
+
+        Files.write(Paths.get("pokemon" + card.getNumber() + ".json"), cardData.toPrettyString().getBytes());
+
+        CardExport cardExport = new CardExport();
+        cardExport.serializeCardToFile(card);
+        System.out.println("ТЕКУЩАЯ КАРТА\n");
+        System.out.println(card);
     }
 }
