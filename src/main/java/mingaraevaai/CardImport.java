@@ -38,6 +38,7 @@ public class CardImport {
             attackSkillList.add(new AttackSkill(args[0], args[1], Integer.valueOf(args[2].trim())));
             args = tokens[1].split("/");
             attackSkillList.add(new AttackSkill(args[0], args[1], Integer.valueOf(args[2].trim())));
+            card.setSkills(attackSkillList);
         }
 
         String weakness = reader.readLine();

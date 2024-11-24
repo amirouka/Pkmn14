@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import ru.mirea.pkmn.AttackSkill;
+
 import java.io.IOException;
+import java.util.List;
 
 public class PkmnHttpClient {
     Retrofit client;

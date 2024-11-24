@@ -16,11 +16,12 @@ public class PkmnApplication {
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
 
         CardImport cardImport = new CardImport();
-        Card card = cardImport.createCardFromFile("C:\\Users\\Амира\\Desktop\\Pkmn\\src\\main\\resources\\my_card.txt");
+        Card card = cardImport.createCardFromFile("src\\main\\resources\\my_card.txt");
 
         PkmnHttpClient pkmnHttpClient = new PkmnHttpClient();
 
         JsonNode cardData = pkmnHttpClient.getPokemonCard(card.getName(), card.getNumber(), card.getHp());
+        System.out.println("ТЕКУЩАЯ КАРТА JSON\n");
         System.out.println(cardData.toPrettyString());
 
         List<AttackSkill> skills = new ArrayList<>();
@@ -45,11 +46,21 @@ public class PkmnApplication {
                 }}}
         card.setSkills(skills);
 
+
+        CardImport cardImport1 = new CardImport();
+        Card card1 = cardImport1.createCardFromFile("src\\main\\resources\\evolves_from.txt");
+
+        PkmnHttpClient pkmnHttpClient1 = new PkmnHttpClient();
+        JsonNode cardData1 = pkmnHttpClient1.getPokemonCard(card1.getName(), card1.getNumber(), card1.getHp());
+
+        System.out.println("КАРТА ЭВОЛЮЦИИ JSON\n");
+        System.out.println(cardData1.toPrettyString());
+
         Files.write(Paths.get("pokemon" + card.getNumber() + ".json"), cardData.toPrettyString().getBytes());
 
-        CardExport cardExport = new CardExport();
-        cardExport.serializeCardToFile(card);
         System.out.println("ТЕКУЩАЯ КАРТА\n");
         System.out.println(card);
+        CardExport cardExport = new CardExport();
+        cardExport.serializeCardToFile(card);
     }
 }

@@ -146,6 +146,7 @@ public class Card implements Serializable {
         this.pokemonStage = pokemonStage;
     }
 
+
     public String toString(){
         return "{\n" + " pokemonStage = " + pokemonStage + "\n" +
                 " name = " + name + "\n" +

@@ -1,13 +1,13 @@
 BASIC
 Pikachu
-50
+40
 LIGHTNING
 -
-2 / Spark / 20
+1 / Gnaw / 10,1L / Thunder Jolt / 30
 Fighting
 -
 1
-Legendary Collection
+Base Set
 -
 -/-/-/-
--
+58
